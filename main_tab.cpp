@@ -32,20 +32,19 @@ void print_simple(std::vector<State> const& states)
 
 int main(int argc, char* argv[]) {
 try {
-if (argc!=5) {
-  throw std::runtime_error{"not enough inputs"};
+
+if (argc!=6) {
+  throw std::runtime_error{"5 inputs required"};
 }
-if (argc<5) {
-  throw std::runtime_error{""};
+
+for (int i=1; i!=4;++i) {
+  if (atoi(argv[i])<=0) {
+    throw std::runtime_error{"inputs must be positive and different from zero"};
+  } 
 }
-if (argc<5) {
-  throw std::runtime_error{""};
-}
-if (argc<5) {
-  throw std::runtime_error{""};
-}
-if (argc<5) {
-  throw std::runtime_error{""};
+
+if (std::stod(argv[4])>1 || std::stod(argv[5])>1 || std::stod(argv[4])<=0. || std::stod(argv[5])<=0.) {
+  throw std::runtime_error{"gamma and beta must be positive and less than 1"};
 }
 
 int S0=std::atoi(argv[1]);
