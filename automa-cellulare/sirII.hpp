@@ -62,7 +62,7 @@ inline Population evolve(Population const& current) {
       if (current.human(r,c)==Human::Susceptible && m==3) {
         next.human(r, c) = Human::Infected;
       } 
-/*      else if (current.human(r,c)==Human::Alive && m==2) {
+      else if (current.human(r,c)==Human::Alive && m==2) {
         next.human(r, c) = Human::Alive;
       }  
       else if (current.human(r,c)==Human::Alive && m==3) {

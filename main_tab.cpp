@@ -18,17 +18,6 @@ void print(std::vector<State> const& states)
 }
 
 
-/*
-void print_simple(std::vector<State> const& states)
-{
-  double const Au = 1.496e11;
-
-  std::cout << "x y\n";
-  for (auto& state : states) {
-    std::cout << state.x / Au << ' ' << state.y / Au << '\n';
-  }
-}
-*/
 
 int main(int argc, char* argv[]) {
 try {
@@ -62,6 +51,9 @@ s0.g =gamma;
 Epidemic covid{s0};
 auto const states=covid.evolve(T);
 print(states);
+if (states.back().I==0) {
+  std::cout<<"ciao\n";
+}
     
 }
 catch (std::runtime_error const& e) {
