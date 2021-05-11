@@ -6,7 +6,7 @@
 
 namespace pandemic {
 
-enum class Human: char {Susceptible,Infectd,Recovered};
+enum class Human: char {Susceptible,Infected,Recovered};
 
 class Population {
   using Row = std::vector<Human>;
@@ -36,6 +36,7 @@ class Population {
 
 inline int contacts(Population const& population, int x, int y) {
   int counter = 0;
+  //if 
   for (int i : {-1, 0, 1}) {
     for (int j : {-1, 0, 1}) {
       if (i == 0 && j == 0) {
@@ -44,7 +45,7 @@ inline int contacts(Population const& population, int x, int y) {
       if (x+i<=0 || (x+i>=population.side()) || y+j<=0 || y+j>=population.side()) { //sistemare-->unire i bordi
         continue;
       }
-      if (population.human(x + i, y + j) == Human::Infected) {
+      if (population.human(x + i, y + j) == Human::Infected) {  //I oppure S?
         ++counter;
       }
     }
@@ -82,5 +83,3 @@ bool operator!=(Population const& left, Population const& right);
 }  // namespace pandemic
 
 #endif
-
-*/
