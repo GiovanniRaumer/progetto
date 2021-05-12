@@ -4,9 +4,9 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
-#include <vector>
+#include <vector> 
 
-struct State {
+struct State { //da aggiungere E e Q
   int S;
   int I;
   int R;
