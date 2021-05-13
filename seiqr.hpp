@@ -33,7 +33,7 @@ class Epidemic {
     for (int t = 1; t != T; ++t) {
       State const& prev = result.back();
       State next;
-      next.S = round(prev.S - prev.b * prev.S * (prev.I + prev.E) / N);
+      next.S = round(prev.S - prev.b * prev.S * (prev.I + prev.E) / N - prev.d * prev.S);
       next.E = round(prev.E + prev.b * prev.S * (prev.E + prev.I) / N -(prev.d + prev.a + prev.k) * prev.E);
       next.I = round(prev.I + prev.a * prev.E - (prev.d + prev.g + prev.l) * prev.I);
       next.Q = round(prev.Q + prev.l * prev.I - (prev.d + prev.e) * prev.Q);
