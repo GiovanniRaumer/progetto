@@ -27,24 +27,24 @@ void printone(std::vector<State> const& states, int h)
   for (auto& state : states){
     if (state.S <= state.I){
       if (state.I <= state.R) {
-        std::cout << "|" << std::setw(state.S/5) << "S" << std::setw(state.I/5 - state.S/5) << "I" << std::setw(state.R/5 - (state.I/5 - state.S/5)) << "R\n"; 
+        std::cout << "|" << std::setw(state.S/5) << "S" << std::setw((state.I - state.S)/5) << "I" << std::setw((state.R - state.I + state.S)/5) << "R\n"; 
       }
       else if (state.R <= state.S) {
-        std::cout << "|" << std::setw(state.R/5) << "R" << std::setw(state.S/5 - state.R/5) << "S" << std::setw(state.I/5 - (state.S/5 - state.R/5)) << "I\n";
+        std::cout << "|" << std::setw(state.R/5) << "R" << std::setw((state.S - state.R)/5) << "S" << std::setw((state.I - state.S + state.R)/5) << "I\n";
       }
       else {
-        std::cout << "|" << std::setw(state.S/5) << "S" << std::setw(state.R/5 - state.S/5) << "R" << std::setw(state.I/5 - (state.R/5 - state.S/5)) << "I\n";
+        std::cout << "|" << std::setw(state.S/5) << "S" << std::setw((state.R - state.S)/5) << "R" << std::setw((state.I - state.R + state.S)/5) << "I\n";
       }
     }
     else {
       if (state.S <= state.R) {
-        std::cout << "|" << std::setw(state.I/5) << "I" << std::setw(state.S/5 - state.I/5) << "S" << std::setw(state.R/5 - (state.S/5 - state.I/5)) << "R\n"; 
+        std::cout << "|" << std::setw(state.I/5) << "I" << std::setw((state.S - state.I)/5) << "S" << std::setw((state.R - state.S + state.I)/5) << "R\n"; 
       }
       else if (state.I <= state.R) {
-        std::cout << "|" << std::setw(state.I/5) << "I" << std::setw(state.R/5 - state.I/5) << "R" << std::setw(state.S/5 - (state.R/5 - state.I/5)) << "S\n";
+        std::cout << "|" << std::setw(state.I/5) << "I" << std::setw((state.R - state.I)/5) << "R" << std::setw((state.S - state.R + state.I)/5) << "S\n";
       }
       else {
-        std::cout << "|" << std::setw(state.R/5) << "R" << std::setw(state.I/5 - state.R/5) << "I" << std::setw(state.S/5 - (state.I/5 - state.R/5)) << "S\n";
+        std::cout << "|" << std::setw(state.R/5) << "R" << std::setw((state.I - state.R)/5) << "I" << std::setw((state.S - state.I + state.R)/5) << "S\n";
       }
     }
     
