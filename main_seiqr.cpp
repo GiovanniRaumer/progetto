@@ -12,7 +12,9 @@ void print(std::vector<State> const& states)
                "+-----------+-----------+-----------+-----------+-----------+\n"
             << std::fixed;
   for (auto& state : states) {
-    std::cout << "| " << std::setw(9) << state.S << " | " << std::setw(9) << state.E << " | "<< std::setw(9) << state.I << " | " << std::setw(9) << state.Q << " | " << std::setw(9) << state.R <<" |\n";
+    std::cout << "| " << std::setw(9) << state.S << " | " << std::setw(9) << state.E << " | "
+              << std::setw(9) << state.I << " | " << std::setw(9) << state.Q << " | " 
+              << std::setw(9) << state.R <<" |\n";
   }
   std::cout << "+-----------+-----------+-----------+-----------+-----------+\n";
 }
@@ -55,6 +57,14 @@ s0.S=S0;
 s0.E=E0;
 s0.I=I0; 
 s0.R=0;
+s0.a=alfa;
+s0.b=beta;
+s0.g=gamma;
+s0.d=d;
+s0.k=k;
+s0.l=delta;
+s0.e=epsilon;
+
 Epidemic covid{s0};
 auto const states=covid.evolve(T);
 print(states);
