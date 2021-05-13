@@ -17,6 +17,40 @@ void print(std::vector<State> const& states)
   std::cout << "+-----------+-----------+-----------+\n";
 }
 
+void printone(std::vector<State> const& states, int h)
+{
+  std::cout << "+";
+  for(int w = 1; w <= h/5; ++w) {
+    std::cout << "-";
+  }
+  std::cout << ">\n";
+  for (auto& state : states){
+    if (state.S <= state.I){
+      if (state.I <= state.R) {
+        std::cout << "|" << std::setw(state.S/5) << "S" << std::setw(state.I/5 - state.S/5) << "I" << std::setw(state.R/5 - (state.I/5 - state.S/5)) << "R\n"; 
+      }
+      else if (state.R <= state.S) {
+        std::cout << "|" << std::setw(state.R/5) << "R" << std::setw(state.S/5 - state.R/5) << "S" << std::setw(state.I/5 - (state.S/5 - state.R/5)) << "I\n";
+      }
+      else {
+        std::cout << "|" << std::setw(state.S/5) << "S" << std::setw(state.R/5 - state.S/5) << "R" << std::setw(state.I/5 - (state.R/5 - state.S/5)) << "I\n";
+      }
+    }
+    else {
+      if (state.S <= state.R) {
+        std::cout << "|" << std::setw(state.I/5) << "I" << std::setw(state.S/5 - state.I/5) << "S" << std::setw(state.R/5 - (state.S/5 - state.I/5)) << "R\n"; 
+      }
+      else if (state.I <= state.R) {
+        std::cout << "|" << std::setw(state.I/5) << "I" << std::setw(state.R/5 - state.I/5) << "R" << std::setw(state.S/5 - (state.R/5 - state.I/5)) << "S\n";
+      }
+      else {
+        std::cout << "|" << std::setw(state.R/5) << "R" << std::setw(state.I/5 - state.R/5) << "I" << std::setw(state.S/5 - (state.I/5 - state.R/5)) << "S\n";
+      }
+    }
+    
+  }
+}
+
 
 
 int main(int argc, char* argv[]) {
@@ -54,6 +88,7 @@ print(states);
 if (states.back().I==0) {
   std::cout<<"ciao\n";
 }
+printone(states, S0+I0);
     
 }
 catch (std::runtime_error const& e) {
