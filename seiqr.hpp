@@ -46,10 +46,14 @@ class Epidemic {
       next.l = prev.l;
       next.e = prev.e;
 
-      /*if (next.S==prev.S && next.E==prev.E && next.I==prev.I && next.Q==prev.Q && next.R==prev.R) {
+      if (next.S==prev.S && next.E==prev.E && next.I==prev.I && next.Q==prev.Q && next.R==prev.R && next.E != 0) {
+        next.E=prev.E-1;    
+        next.I=prev.I+1;    
+      }
+      else if (next.S==prev.S && next.E==prev.E && next.I==prev.I && next.Q==prev.Q && next.R==prev.R && next.E == 0) {
         next.I=prev.I-1;
         next.R=prev.R+1;
-      }*/
+      }
       assert(N==next.S+next.E+next.I+next.Q+next.R);
       result.push_back(next);
       if (next.I==0) {
