@@ -124,8 +124,8 @@ inline Population evolve(Population const &current, situation::State state) {
   for (int r = 0; r != N; ++r) {
     for (int c = 0; c != N; ++c) {
       if (current.human(r, c).Is == Human::I) {
-        // std::default_random_engine eng{std::random_device{}()};
-        // std::uniform_int_distribution<int> dist{-1, 1};
+        std::default_random_engine eng{std::random_device{}()}; // questo serve subito sotto per parte decimale R0;
+        std::uniform_int_distribution<int> dist{-1, 1};
 
         int i_left = 0;
         int s_left = contacts(current, r, c);
@@ -169,7 +169,8 @@ inline Population evolve(Population const &current, situation::State state) {
   //int r_rest = ();
   std::default_random_engine eng{std::random_device{}()};
   std::uniform_int_distribution<int> dist{0, current.side() - 1};
-  int i = 0;
+
+  /*int i = 0;
   while (i != i_rest && N*N-current.infected()-current.recovered()>=1) {
     auto x = dist(eng);
     auto y = dist(eng);
@@ -182,7 +183,7 @@ inline Population evolve(Population const &current, situation::State state) {
         ++i;
     }
     else {continue;}
-  }
+  }*/
 
   return next;
 }
