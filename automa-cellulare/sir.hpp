@@ -116,18 +116,23 @@ inline int contacts(Population const &population, int r, int c) {
 
 inline Population evolve(Population const &current, situation::State state) {
   int const N = current.side();
+  int const time = 1 / state.g;
   Population next = current;  // costruttore di copia? implicito
 
   int const R0 = state.b / state.g;
-  int const time = 1 / state.g;
+  std::default_random_engine eng{std::random_device{}()};  // questo serve subito sotto per parte decimale R0
+  std::uniform_real_distribution<double> dist{0, 1};
 
   for (int r = 0; r != N; ++r) {
     for (int c = 0; c != N; ++c) {
       if (current.human(r, c).Is == Human::I) {
-        std::default_random_engine eng{std::random_device{}()}; // questo serve subito sotto per parte decimale R0;
-        std::uniform_int_distribution<int> dist{-1, 1};
-
+        auto prob = dist(eng);
         int i_left = 0;
+        if (prob <= (state.b / state.g) - R0) {
+          i_left = -1;
+        } else {
+          i_left = 0;
+        }
         int s_left = contacts(current, r, c);
 
         if (s_left > R0) {
@@ -155,38 +160,19 @@ inline Population evolve(Population const &current, situation::State state) {
             }
           }
         }
-        if (current.human(r, c).Is == Human::I) {
-          ++next.human(r, c).d;
+        ++next.human(r, c).d;
+        if (prob <= (1 / state.g) - time) {
+          --next.human(r, c).d;
         }
-        if (current.human(r, c).Is == Human::I && next.human(r, c).d == time) {
+        if (next.human(r, c).d == time) {
           next.human(r, c).Is = Human::R;
         }
       }
+
     }
   }
-
-  int i_rest = (state.b / state.g - R0) * current.infected();
-  //int r_rest = ();
-  std::default_random_engine eng{std::random_device{}()};
-  std::uniform_int_distribution<int> dist{0, current.side() - 1};
-
-  /*int i = 0;
-  while (i != i_rest && N*N-current.infected()-current.recovered()>=1) {
-    auto x = dist(eng);
-    auto y = dist(eng);
-    if (current.human(x, y).Is == Human::I && contacts(current, x, y) >= 1) {
-        int j=distr(eng);
-        int k=distr(eng);
-        for(;current.human(x+j,y+k).Is==Human::S; j=distr(eng), k=distr(eng))
-        ;
-        next.human(x+j,y+k).Is=Human::I;
-        ++i;
-    }
-    else {continue;}
-  }*/
-
   return next;
-}
+} //evolve
 
 }  // namespace pandemic
 
