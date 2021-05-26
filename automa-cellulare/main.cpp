@@ -60,6 +60,12 @@ int main(int argc, char *argv[])
             }
         }
 
+        if (std::atoi(argv[2]) > std::atoi(argv[1])*std::atoi(argv[1])){
+            throw std::runtime_error {
+                "infected must be less than/equal to total"
+            };
+        } 
+
         int const N = std::atoi(argv[1]);
         int const I0 = std::atoi(argv[2]);
         int const T = std::atoi(argv[3]);
