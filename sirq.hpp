@@ -1,5 +1,5 @@
-#ifndef SIR_HPP
-#define SIR_HPP
+#ifndef SIRQ_HPP
+#define SIRQ_HPP
 
 #include <cassert>
 #include <cmath>
@@ -26,10 +26,15 @@ class Epidemic {
     for (int t = 1; t != T; ++t) {
       State const& prev = result.back();
       State next;
+      if (result.back().I <= 0.1*N){
+        next.b = prev.b;
+      }
+      else {
+        next.b = prev.b * (2/3);
+      }
       next.S = round(prev.S - next.b * prev.S * prev.I / N);
       next.I = round(prev.I + next.b * prev.S * prev.I / N - prev.g * prev.I);
       next.R = N-next.S-next.I;
-      next.b = prev.b;
       next.g = prev.g;
       if (next.S==prev.S && next.I==prev.I && next.R==prev.R) {
         next.I=prev.I-1;

@@ -166,7 +166,7 @@ inline Population evolve(Population const &current, situation::State state) {
   }
 
   int i_rest = (state.b / state.g - R0) * current.infected();
-  int r_rest = ()
+  //int r_rest = ();
   std::default_random_engine eng{std::random_device{}()};
   std::uniform_int_distribution<int> dist{0, current.side() - 1};
   int i = 0;

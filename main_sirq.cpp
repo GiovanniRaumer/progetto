@@ -1,6 +1,6 @@
 #include <iomanip>
 #include <iostream>
-#include "sir.hpp"
+#include "sirq.hpp"
 #include <stdexcept>
 
 
@@ -101,5 +101,3 @@ catch (std::runtime_error const& e) {
 
 } 
 }
-
-
