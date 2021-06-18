@@ -2,6 +2,7 @@
 #include <string>  //per std::stod
 #include <thread>
 
+#include "evolve.hpp"
 #include "sir.hpp"
 
 void print(pandemic::Population const &population) {
@@ -11,7 +12,9 @@ void print(pandemic::Population const &population) {
   std::cout << "| S : "
             << N * N - population.infected() - population.recovered() << " | "
             << "I : " << population.infected() << " | "
-            << "R : " << population.recovered() << " | " << '\n';
+            << "R : " << population.recovered() << " | " 
+            << "V : " << population.vaccinated() << '\n';
+
   std::cout << '+' << std::string(N, '-') << "+\n";
   for (int r = 0; r != N; ++r) {
     std::cout << '|';
@@ -24,7 +27,11 @@ void print(pandemic::Population const &population) {
           std::cout << "\033[33mO\033[0m";
           break;
         default:
-          std::cout << "\033[36mO\033[0m";
+          if (population.human(r, c).v == true) {
+            std::cout << "\033[32mO\033[0m";
+          } else {
+            std::cout << "\033[36mO\033[0m";
+          }
           break;
       }
     }
@@ -59,43 +66,25 @@ int main(int argc, char *argv[]) {
       }
     }
 
+    int v_begin = 0;
+    int v_eff = 0;
     if (argc == 9) {
-      if (*argv[6] != 'v' && *argv[6] != 'V' && *argv[6] != 'q' &&
-          *argv[6] != 'Q') {
-        throw std::runtime_error{"6th input must be \"v (V)\" or \"q (Q)\""};
-      }
-
-      if (*argv[6] == 'v' || *argv[6] == 'V') {
+      if (*argv[6] != 'v' && *argv[6] != 'V') {
+        throw std::runtime_error{"6th input must be \"v (V)\" "};
+      } else {
         if (std::atoi(argv[7]) >= std::atoi(argv[3]) ||
-            std::atoi(argv[7]) < 0 ||
+            std::atoi(argv[7]) < 1 ||
             (std::stod(argv[7]) - std::atoi(argv[7])) != 0) {
           throw std::runtime_error{
-              "the vaccination period should be integer and start after the first "
+              "the vaccination period should be integer and start after the "
+              "first "
               "iteration and before the last one"};
         }
-        if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 100 || (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
+        if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 100 ||
+            (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
           throw std::runtime_error{
               "vaccine effectiveness must be an integer between 0 and 100"};
         }
-        int const v_begin = std::atoi(argv[7]);
-        double const v_eff = std::stod(argv[8]);
-      }
-
-      if (*argv[6] == 'q' || *argv[6] == 'Q') {
-        if (std::atoi(argv[7]) >= std::atoi(argv[3]) ||
-            std::atoi(argv[7]) < 0 ||
-            (std::stod(argv[7]) - std::atoi(argv[7])) != 0) {
-          throw std::runtime_error{
-              "the quarantine period should be integer and start after the first "
-              "iteration and before the last one"};
-        }
-        if (std::atoi(argv[8]) < 0 ||
-            (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
-          throw std::runtime_error{
-              "the quarantine period must be a positive integer number"};
-        }
-        int const q_begin = std::atoi(argv[7]);
-        int const q_period = std::atoi(argv[8]);
       }
     }
 
@@ -104,6 +93,9 @@ int main(int argc, char *argv[]) {
     int const T = std::atoi(argv[3]);
     double beta = std::stod(argv[4]);
     double gamma = std::stod(argv[5]);
+    v_begin = std::atoi(argv[7]);
+    v_eff = std::atoi(argv[8]);
+    bool v_ok = false;
 
     pandemic::Population population(N, I0);
     situation::State state;
@@ -119,8 +111,12 @@ int main(int argc, char *argv[]) {
       if (population.infected() == 0) {
         break;
       }
+      if ((*argv[6] == 'v' || *argv[6] == 'V') && (i + 1) == v_begin) {
+        v_ok = true;
+      }
       state = situation::evolve(state);
-      population = evolve(population, state);
+      // population = evolve(population, state);
+      population = evolve(population, state, v_ok, v_eff);
     }
   } catch (std::runtime_error const &e) {
     std::cerr << e.what() << '\n';

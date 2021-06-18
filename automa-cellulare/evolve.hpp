@@ -1,20 +1,41 @@
+#ifndef EVOLVE_HPP
+#define EVOLVE_HPP
+
 #include "sir.hpp"
 
 std::default_random_engine eng{std::random_device{}()};
 std::uniform_int_distribution<int> distr{-1, 1};
 
-inline pandemic::Population evolve(pandemic::Population const &current, situation::State state, char def, int p1, int p2) {
-  if (p1 = 0) {
-      
-  }
+inline pandemic::Population evolve(pandemic::Population const &current,
+                                   situation::State state, bool v_ok,
+                                   int v_eff) {
   int const N = current.side();
   int const time = 1 / state.g;
   pandemic::Population next = current;  // costruttore di copia? implicito
 
   int const R0 = state.b / state.g;
-  std::default_random_engine eng{std::random_device{}()};  // questo serve subito sotto per parte decimale R0
+  std::default_random_engine eng{
+      std::random_device{}()};  // questo serve subito sotto per parte decimale
+                                // R0
   std::uniform_real_distribution<double> dist{0, 1};
 
+  // VACCINATION
+  if (v_ok == true) {
+    int vax_per_day = N * N * 0.001;
+
+    while (vax_per_day > 0) {
+      std::default_random_engine eng{std::random_device{}()};
+      std::uniform_int_distribution<int> pos{0, N};
+      int r = pos(eng);
+      int c = pos(eng);
+      if (current.human(r, c).Is == pandemic::Human::S && current.human(r, c).v == false) {
+        next.human(r, c).v = true;
+        --vax_per_day;
+      }
+    }
+  }
+
+  // INFECTION
   for (int r = 0; r != N; ++r) {
     for (int c = 0; c != N; ++c) {
       if (current.human(r, c).Is == pandemic::Human::I) {
@@ -22,8 +43,6 @@ inline pandemic::Population evolve(pandemic::Population const &current, situatio
         int i_left = 0;
         if (prob <= (state.b / state.g) - R0) {
           i_left = -1;
-        } else {
-          i_left = 0;
         }
         int s_left = contacts(current, r, c);
 
@@ -60,11 +79,9 @@ inline pandemic::Population evolve(pandemic::Population const &current, situatio
           next.human(r, c).Is = pandemic::Human::R;
         }
       }
-
     }
   }
-  while (p1 >= 0) {
-      --p1;
-  }
   return next;
-} //evolve
+}  // evolve
+
+#endif

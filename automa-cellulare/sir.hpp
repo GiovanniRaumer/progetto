@@ -17,6 +17,7 @@ struct Human {
 
   IS Is;
   int d = 0;  // stands for 'days'
+  bool v = false; //is this vaccinated?
 };
 
 class Population {
@@ -96,6 +97,18 @@ class Population {
       }
     }
     return recovered;
+  }
+
+  int vaccinated() const {
+    int vaccinated = 0;
+    for (int r = 0; r != w_side; ++r) {
+      for (int c = 0; c != w_side; ++c) {
+        if (w_grid[r][c].v == true) {
+          ++vaccinated;
+        }
+      }
+    }
+    return vaccinated;
   }
 };
 
