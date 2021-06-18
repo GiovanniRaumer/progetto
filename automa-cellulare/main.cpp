@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
         }
         int const q_begin=std::atoi(argv[7]);
         int const q_period=std::atoi(argv[8]);
-        break
+        break;
     }
 
         int const N = std::atoi(argv[1]);
