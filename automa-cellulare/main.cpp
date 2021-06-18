@@ -66,26 +66,33 @@ int main(int argc, char *argv[]) {
       }
 
       if (*argv[6] == 'v' || *argv[6] == 'V') {
-        if (std::atoi(argv[7]) >= std::atoi(argv[3]) || std::atoi(argv[7]) < 0) {
+        if (std::atoi(argv[7]) >= std::atoi(argv[3]) ||
+            std::atoi(argv[7]) < 0 ||
+            (std::stod(argv[7]) - std::atoi(argv[7])) != 0) {
           throw std::runtime_error{
-              "the vaccination period should start after the first iteration and before the last one"};
+              "the vaccination period should be integer and start after the first "
+              "iteration and before the last one"};
         }
-        if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 1) {
+        if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 100 || (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
           throw std::runtime_error{
-              "vaccine effectiveness must be positive and less than 1"};
+              "vaccine effectiveness must be an integer between 0 and 100"};
         }
         int const v_begin = std::atoi(argv[7]);
         double const v_eff = std::stod(argv[8]);
       }
 
       if (*argv[6] == 'q' || *argv[6] == 'Q') {
-        if (std::atoi(argv[7]) >= std::atoi(argv[3]) || std::atoi(argv[7]) < 0) {
+        if (std::atoi(argv[7]) >= std::atoi(argv[3]) ||
+            std::atoi(argv[7]) < 0 ||
+            (std::stod(argv[7]) - std::atoi(argv[7])) != 0) {
           throw std::runtime_error{
-              "the quarantine period should start after the first iteration and before the last one"};
+              "the quarantine period should be integer and start after the first "
+              "iteration and before the last one"};
         }
-        if (std::atoi(argv[8]) < 0) {
+        if (std::atoi(argv[8]) < 0 ||
+            (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
           throw std::runtime_error{
-              "the quarantine period must be a positive number"};
+              "the quarantine period must be a positive integer number"};
         }
         int const q_begin = std::atoi(argv[7]);
         int const q_period = std::atoi(argv[8]);
