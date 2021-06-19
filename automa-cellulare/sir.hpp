@@ -11,13 +11,15 @@ std::uniform_int_distribution<int> distr{-1, 1};
 struct Human {
   enum IS : char  // unscoped enum; potrebbe dare problemi, ma dovrebbe andare
                   // bene...
-  { S,
+  {
+    S,
     I,
-    R };
+    R
+  };
 
   IS Is;
-  int d = 0;  // stands for 'days'
-  bool v = false; //is this vaccinated?
+  int d = 0;       // stands for 'days'
+  bool v = false;  // is this vaccinated?
 };
 
 class Population {
@@ -49,11 +51,14 @@ class Population {
 
     std::default_random_engine eng{std::random_device{}()};
     std::uniform_int_distribution<int> dist{0, w_side - 1};
+    int r = dist(eng);
+    int c = dist(eng);
 
-    for (int i = 0; i != first_I; ++i) {
-      int r = dist(eng);
-      int c = dist(eng);
-      w_grid[r][c].Is = Human::I;
+    for (int i = 0; i != first_I; r = dist(eng), c = dist(eng)) {
+      if (w_grid[r][c].Is == Human::S) {
+        w_grid[r][c].Is = Human::I;
+        ++i;
+      }
     }
   }
 
@@ -146,7 +151,9 @@ inline Population evolve(Population const &current, situation::State state) {
   Population next = current;  // costruttore di copia? implicito
 
   int const R0 = state.b / state.g;
-  std::default_random_engine eng{std::random_device{}()};  // questo serve subito sotto per parte decimale R0
+  std::default_random_engine eng{
+      std::random_device{}()};  // questo serve subito sotto per parte decimale
+                                // R0
   std::uniform_real_distribution<double> dist{0, 1};
 
   for (int r = 0; r != N; ++r) {
@@ -194,11 +201,10 @@ inline Population evolve(Population const &current, situation::State state) {
           next.human(r, c).Is = Human::R;
         }
       }
-
     }
   }
   return next;
-} //evolve
+}  // evolve
 
 }  // namespace pandemic
 

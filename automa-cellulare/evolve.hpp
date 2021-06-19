@@ -22,7 +22,7 @@ inline pandemic::Population evolve(pandemic::Population const &current,
     int vax_per_day = N * N * 0.01;
 
     std::default_random_engine eng{std::random_device{}()};
-    std::uniform_int_distribution<int> pos{0, N};
+    std::uniform_int_distribution<int> pos{0, N - 1};
     int r = pos(eng);
     int c = pos(eng);
 

@@ -44,9 +44,12 @@ int main(int argc, char *argv[]) {
   try {
     if (argc != 6 && argc != 9) {
       throw std::runtime_error{"5 or 8 inputs required \n"};
-    }
+    } else {
+      if (atoi(argv[1]) < 10 || atoi(argv[1]) > 100) {
+        throw std::runtime_error{
+              "grid side between 10 and 100 \n"};
+      }
 
-    if (argc == 6 || argc == 9) {
       for (int i = 1; i != 4; ++i) {
         if (atoi(argv[i]) <= 0) {
           throw std::runtime_error{
@@ -62,7 +65,8 @@ int main(int argc, char *argv[]) {
       }
 
       if (std::atoi(argv[2]) > std::atoi(argv[1]) * std::atoi(argv[1])) {
-        throw std::runtime_error{"infected must be less than/equal to total \n"};
+        throw std::runtime_error{
+            "infected must be less than/equal to total \n"};
       }
     }
 
