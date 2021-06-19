@@ -79,14 +79,13 @@ int main(int argc, char *argv[]) {
               "the vaccination period should be integer and start after the "
               "first iteration and before the last one \n"};
         }
-        if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 100 ||
-            (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
+        if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 1) {
           throw std::runtime_error{
               "vaccine effectiveness must be positive and less than 1 \n"};
         }
       }
       v_begin = std::atoi(argv[7]);
-      v_eff = std::atoi(argv[8]);
+      v_eff = std::stod(argv[8]);
     }
 
     int const N = std::atoi(argv[1]);
@@ -115,7 +114,7 @@ int main(int argc, char *argv[]) {
 
       ++population.day;
 
-      if (v_eff != 0 && (i + 1) == v_begin) {
+      if (v_eff != 0. && (i + 1) == v_begin) {
         v_ok = true;
       }
       state = situation::evolve(state);
