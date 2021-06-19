@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
     }
   } catch (std::runtime_error const &e) {
     std::cerr << e.what() << "INSTRUCTIONS:" << '\n'
-              << "- necessary - \n"
+              << "- mandatory - \n"
               << "1st input --> grid side \n"
               << "2nd input --> initial infected subjects \n"
               << "3rd input --> duration of simulation (days) \n"
