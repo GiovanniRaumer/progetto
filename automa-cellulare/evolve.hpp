@@ -8,40 +8,41 @@ std::uniform_int_distribution<int> distr{-1, 1};
 
 inline pandemic::Population evolve(pandemic::Population const &current,
                                    situation::State state, bool v_ok,
-                                   int v_eff) {
+                                   double v_eff) {
   int const N = current.side();
   int const time = 1 / state.g;
   pandemic::Population next = current;  // costruttore di copia? implicito
 
   int const R0 = state.b / state.g;
-  std::default_random_engine eng{
-      std::random_device{}()};  // questo serve subito sotto per parte decimale
-                                // R0
+  std::default_random_engine eng{std::random_device{}()};  // questo serve subito sotto per parte decimale R0
   std::uniform_real_distribution<double> dist{0, 1};
 
   // VACCINATION
   if (v_ok == true) {
     int vax_per_day = N * N * 0.01;
 
-    while (vax_per_day > 0) {
-      if (vax_per_day >= N * N - current.infected() - current.recovered() - current.vaccinated()) {
-        for (int r = 0; r != N; ++r) {
-          for (int c = 0; c != N; ++c) {
-            if (current.human(r, c).Is == pandemic::Human::S) {
-                next.human(r, c).v = true;
-            }
+    std::default_random_engine eng{std::random_device{}()};
+    std::uniform_int_distribution<int> pos{0, N};
+    int r = pos(eng);
+    int c = pos(eng);
+
+    std::cout << '\n' << current.S_not_vax() << '\n';
+
+    if (vax_per_day >= current.S_not_vax()) {
+      for (int r = 0; r != N; ++r) {
+        for (int c = 0; c != N; ++c) {
+          if (current.human(r, c).Is == pandemic::Human::S) {
+            next.human(r, c).v = true;
           }
         }
-        break;
       }
-      std::default_random_engine eng{std::random_device{}()};
-      std::uniform_int_distribution<int> pos{0, N};
-      int r = pos(eng);
-      int c = pos(eng);
-      if (current.human(r, c).Is == pandemic::Human::S &&
-          current.human(r, c).v == false) {
-        next.human(r, c).v = true;
-        --vax_per_day;
+    } else {
+      for (; vax_per_day > 0; r = pos(eng), c = pos(eng)) {
+        if (current.human(r, c).Is == pandemic::Human::S &&
+            next.human(r, c).v == false) {
+          next.human(r, c).v = true;
+          --vax_per_day;
+        }
       }
     }
   }

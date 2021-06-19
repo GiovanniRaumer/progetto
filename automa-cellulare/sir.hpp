@@ -57,6 +57,7 @@ class Population {
     }
   }
 
+  int day = 1;
   int side() const { return w_side; }
 
   Human const &human(int r, int c) const noexcept {
@@ -109,6 +110,18 @@ class Population {
       }
     }
     return vaccinated;
+  }
+
+  int S_not_vax() const {
+    int notvax = 0;
+    for (int r = 0; r != w_side; ++r) {
+      for (int c = 0; c != w_side; ++c) {
+        if (w_grid[r][c].v == false && w_grid[r][c].Is == Human::S) {
+          ++notvax;
+        }
+      }
+    }
+    return notvax;
   }
 };
 
