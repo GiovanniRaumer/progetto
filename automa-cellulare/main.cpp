@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
         throw std::runtime_error{"6th input must be \"v (V)\" \n"};
       } else {
         if (std::atoi(argv[7]) >= std::atoi(argv[3]) ||
-            std::atoi(argv[7]) < 1 ||
+            std::atoi(argv[7]) < 2 ||
             (std::stod(argv[7]) - std::atoi(argv[7])) != 0) {
           throw std::runtime_error{
               "the vaccination period should be integer and start after the "

@@ -7,7 +7,7 @@ std::default_random_engine eng{std::random_device{}()};
 std::uniform_int_distribution<int> distr{-1, 1};
 
 inline pandemic::Population evolve(pandemic::Population const &current,
-                                   situation::State state, bool v_ok,
+                                   situation::State const &state, bool v_ok,
                                    double v_eff) {
   int const N = current.side();
   int const time = 1 / state.g;
@@ -25,8 +25,6 @@ inline pandemic::Population evolve(pandemic::Population const &current,
     std::uniform_int_distribution<int> pos{0, N - 1};
     int r = pos(eng);
     int c = pos(eng);
-
-    std::cout << '\n' << current.S_not_vax() << '\n';
 
     if (vax_per_day >= current.S_not_vax()) {
       for (int r = 0; r != N; ++r) {
