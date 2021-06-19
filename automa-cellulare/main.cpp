@@ -12,7 +12,7 @@ void print(pandemic::Population const &population) {
   std::cout << "| S : "
             << N * N - population.infected() - population.recovered() << " | "
             << "I : " << population.infected() << " | "
-            << "R : " << population.recovered() << " | " 
+            << "R : " << population.recovered() << " | "
             << "V : " << population.vaccinated() << '\n';
 
   std::cout << '+' << std::string(N, '-') << "+\n";
@@ -77,8 +77,7 @@ int main(int argc, char *argv[]) {
             (std::stod(argv[7]) - std::atoi(argv[7])) != 0) {
           throw std::runtime_error{
               "the vaccination period should be integer and start after the "
-              "first "
-              "iteration and before the last one"};
+              "first iteration and before the last one"};
         }
         if (std::atoi(argv[8]) < 0 || std::atoi(argv[8]) > 100 ||
             (std::stod(argv[8]) - std::atoi(argv[8])) != 0) {
@@ -86,6 +85,8 @@ int main(int argc, char *argv[]) {
               "vaccine effectiveness must be an integer between 0 and 100"};
         }
       }
+      v_begin = std::atoi(argv[7]);
+      v_eff = std::atoi(argv[8]);
     }
 
     int const N = std::atoi(argv[1]);
@@ -93,8 +94,6 @@ int main(int argc, char *argv[]) {
     int const T = std::atoi(argv[3]);
     double beta = std::stod(argv[4]);
     double gamma = std::stod(argv[5]);
-    v_begin = std::atoi(argv[7]);
-    v_eff = std::atoi(argv[8]);
     bool v_ok = false;
 
     pandemic::Population population(N, I0);
@@ -105,17 +104,19 @@ int main(int argc, char *argv[]) {
     state.b = beta;
     state.g = gamma;
 
+    std::cout << v_begin << " " << v_eff << '\n';
+
     for (int i = 0; i != T; ++i) {
       print(population);
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       if (population.infected() == 0) {
         break;
       }
-      if ((*argv[6] == 'v' || *argv[6] == 'V') && (i + 1) == v_begin) {
+      if (v_eff != 0 && (i + 1) == v_begin) {
         v_ok = true;
       }
       state = situation::evolve(state);
-      // population = evolve(population, state);
+//    population = evolve(population, state);
       population = evolve(population, state, v_ok, v_eff);
     }
   } catch (std::runtime_error const &e) {
