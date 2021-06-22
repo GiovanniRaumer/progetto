@@ -10,7 +10,7 @@ namespace situation
 {
 
     struct State
-    { //da aggiungere E e Q
+    { 
         int S;
         int I;
         int R;

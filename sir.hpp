@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector> 
 
-struct State { //da aggiungere E e Q
+struct State { 
   int S;
   int I;
   int R;
