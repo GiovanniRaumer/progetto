@@ -28,7 +28,7 @@ void print(pandemic::Population const &population) {
           break;
         default:
           if (population.human(r, c).v == true) {
-            std::cout << "\033[35mV\033[0m";
+            std::cout << "V";
           } else {
             std::cout << "\033[36mO\033[0m";
           }
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
 
       ++population.day;
 
-      if (v_eff != 0. && (i + 1) == v_begin) {
+      if (v_eff != 0. && (i + 2) == v_begin) {
         v_ok = true;
       }
       state = situation::evolve(state);
