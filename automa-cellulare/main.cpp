@@ -1,15 +1,16 @@
 #include <chrono>
-#include <string>  //per std::stod
+#include <string>
 #include <thread>
+#include <iostream>
 
 #include "evolve.hpp"
-#include "sir.hpp"
 
-void print(pandemic::Population const &population) {
+void print(pandemic::Population const &population, int day) {
+  
   const auto N = population.side();
 
   std::cout << "\033[2J";
-  std::cout << " day " << population.day << " | S : "
+  std::cout << " day " << day << " | S : "
             << N * N - population.infected() - population.recovered() << " | "
             << "I : " << population.infected() << " | "
             << "R : " << population.recovered() << " | "
@@ -92,38 +93,22 @@ int main(int argc, char *argv[]) {
       v_eff = std::stod(argv[8]);
     }
 
-    int const N = std::atoi(argv[1]);
-    int const I0 = std::atoi(argv[2]);
+    pandemic::Population population(std::atoi(argv[1]), std::atoi(argv[2]));
+
     int const T = std::atoi(argv[3]);
     double beta = std::stod(argv[4]);
     double gamma = std::stod(argv[5]);
-    bool v_ok = false;
-
-    pandemic::Population population(N, I0);
-    situation::State state;
-    state.S = N * N - I0;
-    state.I = I0;
-    state.R = 0;
-    state.b = beta;
-    state.g = gamma;
-
-    std::cout << v_begin << " " << v_eff << '\n';
 
     for (int i = 0; i != T; ++i) {
-      print(population);
+      print(population, i + 1);
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
       if (population.infected() == 0) {
         break;
       }
 
-      ++population.day;
-
-      if (v_eff != 0. && (i + 2) == v_begin) {
-        v_ok = true;
-      }
-      state = situation::evolve(state);
-      //    population = evolve(population, state);
-      population = evolve(population, state, v_ok, v_eff);
+      population = evolve(population, beta, gamma, i, v_begin, v_eff);
+      
     }
   } catch (std::runtime_error const &e) {
     std::cerr << e.what() << "INSTRUCTIONS:" << '\n'

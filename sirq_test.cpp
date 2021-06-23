@@ -16,7 +16,7 @@ TEST_CASE("Testing equations") {
 
   Epidemic ep(initial_state);
 
-  SUBCASE("Without quarantine") {
+  SUBCASE("No lockdown") {
     int q_start = 1.;
     int q_eff = 1.;
     auto const evolution = ep.evolve(T, q_start, q_eff);
@@ -29,7 +29,7 @@ TEST_CASE("Testing equations") {
     CHECK(initial_state.b == last_state.b);
   }
 
-  SUBCASE("With quarantine") {
+  SUBCASE("Lockdown") {
     int q_start = 0.1;
     int q_eff = 0.6;
     auto const evolution = ep.evolve(T, q_start, q_eff);
