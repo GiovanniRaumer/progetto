@@ -1,7 +1,7 @@
 #include <iomanip>
 #include <stdexcept>
 
-#include "sirq.hpp"
+#include "sir_l.hpp"
 
 void print(std::vector<State> const& states) {
   std::cout << "+-----------+-----------+-----------+-----------+\n"

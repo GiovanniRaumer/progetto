@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-#include "sirq.hpp"
+#include "sir_l.hpp"
 
 TEST_CASE("Testing equations") {
   State initial_state;
