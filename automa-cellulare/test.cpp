@@ -37,12 +37,11 @@ TEST_CASE("Testing increasing of vaccinated subjects"){
   int T=10;
   int v_begin=2;
   double v_eff=0.94;
-  pandemic::Population next(10,10);
-  next = med;
+  pandemic::Population next = med;
   for (int i = 0; i != T; ++i) {
     next = evolve(next, beta, gamma, i, v_begin, v_eff);
   }
-  CHECK(next.recovered() > med.recovered());
+  CHECK(next.vaccinated() > med.vaccinated());
 }
 
 TEST_CASE("Testing increasing of recovered subjects"){
@@ -53,8 +52,7 @@ TEST_CASE("Testing increasing of recovered subjects"){
     int T=10;
     int v_begin=0;
     double v_eff=0;
-    pandemic::Population next(10,10);
-    next = med;
+    pandemic::Population next = med;
     for (int i = 0; i != T; ++i) {
       next = evolve(next, beta, gamma, i, v_begin, v_eff);
     }
@@ -64,8 +62,7 @@ TEST_CASE("Testing increasing of recovered subjects"){
     int T=10;
     int v_begin=2;
     double v_eff=0.94;
-    pandemic::Population next(10,10);
-    next = med;
+    pandemic::Population next = med;
     for (int i = 0; i != T; ++i) {
       next = evolve(next, beta, gamma, i, v_begin, v_eff);
     }
@@ -81,8 +78,7 @@ TEST_CASE("Testing decreasing susceptible people"){
     int T=10;
     int v_begin=0;
     double v_eff=0;
-    pandemic::Population next(10,10);
-    next = med;
+    pandemic::Population next = med;
     for (int i = 0; i != T; ++i) {
       next = evolve(next, beta, gamma, i, v_begin, v_eff);
     }
@@ -92,8 +88,7 @@ TEST_CASE("Testing decreasing susceptible people"){
     int T=10;
     int v_begin=2;
     double v_eff=0.94;
-    pandemic::Population next(10,10);
-    next = med;
+    pandemic::Population next = med;
     for (int i = 0; i != T; ++i) {
       next = evolve(next, beta, gamma, i, v_begin, v_eff);
     }
