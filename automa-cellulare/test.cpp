@@ -34,11 +34,15 @@ TEST_CASE("Testing increasing vaccinated people"){
   pandemic::Population med(10,10);
   double beta=0.7;
   double gamma=0.4;
-  int i=10;
+  int T=10;
   int v_begin=2;
   double v_eff=0.94;
-  auto const next = evolve(med, beta, gamma, i, v_begin, v_eff);
-  CHECK(next.vaccinated() > med.vaccinated());
+  pandemic::Population next(10,10);
+  next = med;
+  for (int i = 0; i != T; ++i) {
+    next = evolve(next, beta, gamma, i, v_begin, v_eff);
+  }
+  CHECK(next.recovered() > med.recovered());
 }
 
 TEST_CASE("Testing increasing recovered people"){
@@ -49,19 +53,51 @@ TEST_CASE("Testing increasing recovered people"){
     int T=10;
     int v_begin=0;
     double v_eff=0;
-    pandemic::Population next;
+    pandemic::Population next(10,10);
+    next = med;
     for (int i = 0; i != T; ++i) {
-      next = evolve(med, beta, gamma, i, v_begin, v_eff);
-      
+      next = evolve(next, beta, gamma, i, v_begin, v_eff);
     }
     CHECK(next.recovered() > med.recovered());
   }
   SUBCASE("Vaccination"){
-    int i=10;
+    int T=10;
     int v_begin=2;
     double v_eff=0.94;
-    auto const next = evolve(med, beta, gamma, i, v_begin, v_eff);
+    pandemic::Population next(10,10);
+    next = med;
+    for (int i = 0; i != T; ++i) {
+      next = evolve(next, beta, gamma, i, v_begin, v_eff);
+    }
     CHECK(next.recovered() > med.recovered());
+  }
+}
+
+TEST_CASE("Testing decreasing susceptible people"){
+  pandemic::Population med(10,10);
+  double beta=0.7;
+  double gamma=0.4;
+  SUBCASE("No vaccination"){
+    int T=10;
+    int v_begin=0;
+    double v_eff=0;
+    pandemic::Population next(10,10);
+    next = med;
+    for (int i = 0; i != T; ++i) {
+      next = evolve(next, beta, gamma, i, v_begin, v_eff);
+    }
+    CHECK(next.S_not_vax() < med.S_not_vax());
+  }
+  SUBCASE("Vaccination"){
+    int T=10;
+    int v_begin=2;
+    double v_eff=0.94;
+    pandemic::Population next(10,10);
+    next = med;
+    for (int i = 0; i != T; ++i) {
+      next = evolve(next, beta, gamma, i, v_begin, v_eff);
+    }
+    CHECK(next.S_not_vax() < med.S_not_vax());
   }
 }
 
