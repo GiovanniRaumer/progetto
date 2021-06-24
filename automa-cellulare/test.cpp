@@ -30,7 +30,7 @@ TEST_CASE("Testing immunity")
   }
 }
   
-TEST_CASE("Testing increasing vaccinated people"){
+TEST_CASE("Testing increasing of vaccinated subjects"){
   pandemic::Population med(10,10);
   double beta=0.7;
   double gamma=0.4;
@@ -41,7 +41,7 @@ TEST_CASE("Testing increasing vaccinated people"){
   CHECK(next.vaccinated() > med.vaccinated());
 }
 
-TEST_CASE("Testing increasing recovered people"){
+TEST_CASE("Testing increasing of recovered subjects"){
   pandemic::Population med(10,10);
   double beta=0.7;
   double gamma=0.4;
