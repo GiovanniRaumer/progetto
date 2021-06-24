@@ -1,6 +1,6 @@
+#include <thread>
 #include <chrono>
 #include <string>
-#include <thread>
 #include <iostream>
 
 #include "evolve.hpp"

@@ -2,7 +2,7 @@
 #define SIRQ_HPP
 
 #include <cassert>
-#include <cmath>
+#include <cmath> // for std::round
 #include <iostream>
 #include <vector> 
 
@@ -32,8 +32,8 @@ class Epidemic {
       else {
         next.b = prev.b * q_eff;
       }
-      next.S = round(prev.S - next.b * prev.S * prev.I / N);
-      next.I = round(prev.I + next.b * prev.S * prev.I / N - prev.g * prev.I);
+      next.S = std::round(prev.S - next.b * prev.S * prev.I / N);
+      next.I = std::round(prev.I + next.b * prev.S * prev.I / N - prev.g * prev.I);
       next.R = N-next.S-next.I;
       next.g = prev.g;
       if (next.S==prev.S && next.I==prev.I && next.R==prev.R) {
