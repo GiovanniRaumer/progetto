@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "sir.hpp"
+#include "sir_v.hpp"
 
 
 TEST_CASE("Testing immunity")
