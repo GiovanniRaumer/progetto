@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "evolve.hpp"
+#include "sir.hpp"
 
 
 TEST_CASE("Testing immunity")
