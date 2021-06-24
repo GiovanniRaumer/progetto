@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-#include "evolve.hpp"
+#include "sir.hpp"
 
 void print(pandemic::Population const &population, int day) {
   
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
         break;
       }
 
-      population = evolve(population, beta, gamma, i, v_begin, v_eff);
+      population = pandemic::evolve(population, beta, gamma, i, v_begin, v_eff);
       
     }
   } catch (std::runtime_error const &e) {
