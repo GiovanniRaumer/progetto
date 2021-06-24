@@ -1,7 +1,6 @@
 #ifndef SIR_HPP
 #define SIR_HPP
 
-#include <cmath>
 #include <vector>
 #include <random>
 #include <cassert>
