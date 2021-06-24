@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-#include "sir.hpp"
+#include "sir_v.hpp"
 
 void print(pandemic::Population const &population, int day) {
   
