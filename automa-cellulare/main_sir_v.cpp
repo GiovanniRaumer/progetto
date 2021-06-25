@@ -1,10 +1,11 @@
+#include "sir_v.hpp"
+
 #include <thread>
 #include <chrono>
 #include <string>
 #include <iostream>
 
-#include "sir_v.hpp"
-
+//PRINT
 void print(pandemic::Population const &population, int day) {
   
   const auto N = population.side();
@@ -41,8 +42,10 @@ void print(pandemic::Population const &population, int day) {
   std::cout << '+' << std::string(N, '-') << "+\n";
 }
 
+// MAIN
 int main(int argc, char *argv[]) {
   try {
+//GESTIONE INPUT (ISTRUZIONI A FINE main)
     if (argc != 6 && argc != 9) {
       throw std::runtime_error{"5 or 8 inputs required \n"};
     } else {
@@ -93,6 +96,7 @@ int main(int argc, char *argv[]) {
       v_eff = std::stod(argv[8]);
     }
 
+// OUTPUT TABELLA
     pandemic::Population population(std::atoi(argv[1]), std::atoi(argv[2]));
 
     int const T = std::atoi(argv[3]);
