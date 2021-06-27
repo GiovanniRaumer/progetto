@@ -20,7 +20,7 @@ class Epidemic {
  public:
   Epidemic(State initial_state) : e_initial_state{initial_state} {}
 
-  std::vector<State> evolve(int T, double q_start, double q_eff);
+  std::vector<State> evolve(int T, double l_start, double l_eff);
 };
 
 #endif

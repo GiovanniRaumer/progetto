@@ -74,8 +74,8 @@ int main(int argc, char* argv[]) {
           "gamma and beta must be positive and less than 1 \n"};
     }
 
-    double q_start = 1.;
-    double q_eff = 1.;
+    double l_start = 1.;
+    double l_eff = 1.;
     if (argc == 8) {
       if (std::stod(argv[6]) <= 0 || std::stod(argv[6]) >= 1 ||
           std::stod(argv[7]) <= 0 || std::stod(argv[7]) >= 1) {
@@ -83,8 +83,8 @@ int main(int argc, char* argv[]) {
             "the turning point of quarantine and its efficency must be "
             "positive (not 0) and less than 1 \n"};
       } else {
-        q_start = std::stod(argv[6]);
-        q_eff = std::stod(argv[7]);
+        l_start = std::stod(argv[6]);
+        l_eff = std::stod(argv[7]);
       }
     }
 
@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
     s0.g = std::stod(argv[5]);
 
     Epidemic plague{s0};
-    auto const states = plague.evolve(T, q_start, q_eff);
+    auto const states = plague.evolve(T, l_start, l_eff);
 
     print(states);
 
