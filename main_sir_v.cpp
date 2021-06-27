@@ -1,13 +1,12 @@
+#include <chrono>
+#include <iostream>
+#include <string>
+#include <thread>
+
 #include "sir_v.hpp"
 
-#include <thread>
-#include <chrono>
-#include <string>
-#include <iostream>
-
-//PRINT
+// PRINT
 void print(pandemic::Population const &population, int day) {
-  
   const auto N = population.side();
 
   std::cout << "\033[2J";
@@ -45,13 +44,12 @@ void print(pandemic::Population const &population, int day) {
 // MAIN
 int main(int argc, char *argv[]) {
   try {
-//GESTIONE INPUT (ISTRUZIONI A FINE main)
+    // GESTIONE INPUT (ISTRUZIONI A FINE main)
     if (argc != 6 && argc != 9) {
       throw std::runtime_error{"5 or 8 inputs required \n"};
     } else {
       if (atoi(argv[1]) < 10 || atoi(argv[1]) > 100) {
-        throw std::runtime_error{
-              "grid side between 10 and 100 \n"};
+        throw std::runtime_error{"grid side between 10 and 100 \n"};
       }
 
       for (int i = 1; i != 4; ++i) {
@@ -96,7 +94,7 @@ int main(int argc, char *argv[]) {
       v_eff = std::stod(argv[8]);
     }
 
-// OUTPUT TABELLA
+    // OUTPUT TABELLA
     pandemic::Population population(std::atoi(argv[1]), std::atoi(argv[2]));
 
     int const T = std::atoi(argv[3]);
@@ -112,7 +110,6 @@ int main(int argc, char *argv[]) {
       }
 
       population = pandemic::evolve(population, beta, gamma, i, v_begin, v_eff);
-      
     }
   } catch (std::runtime_error const &e) {
     std::cerr << e.what() << "INSTRUCTIONS:" << '\n'

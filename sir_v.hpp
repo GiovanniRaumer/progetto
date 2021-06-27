@@ -1,9 +1,9 @@
 #ifndef SIR_HPP
 #define SIR_HPP
 
-#include <vector>
-#include <random>
 #include <cassert>
+#include <random>
+#include <vector>
 
 namespace pandemic {
 
@@ -28,7 +28,7 @@ class Population {
 
  public:
   Population(int N, int I0);
-  
+
   int side() const { return w_side; }
 
   Human const &human(int r, int c) const noexcept;
@@ -61,8 +61,8 @@ inline int contacts(Population const &population, int r, int c) {
 }
 
 // EVOLVE
-inline Population evolve(Population const &current, double beta, double gamma, int i, int v_begin, double v_eff) {
-  
+inline Population evolve(Population const &current, double beta, double gamma,
+                         int i, int v_begin, double v_eff) {
   std::default_random_engine eng{std::random_device{}()};
   std::uniform_int_distribution<int> int_dist{-1, 1};
   std::uniform_real_distribution<double> real_dist{0, 1};
@@ -91,8 +91,7 @@ inline Population evolve(Population const &current, double beta, double gamma, i
       }
     } else {
       for (; vax_per_day > 0; r = position(eng), c = position(eng)) {
-        if (current.human(r, c).Is == Human::S &&
-            next.human(r, c).v == false) {
+        if (current.human(r, c).Is == Human::S && next.human(r, c).v == false) {
           next.human(r, c).v = true;
           --vax_per_day;
         }
@@ -104,7 +103,6 @@ inline Population evolve(Population const &current, double beta, double gamma, i
   for (int r = 0; r != N; ++r) {
     for (int c = 0; c != N; ++c) {
       if (current.human(r, c).Is == Human::I) {
-
         auto prob = real_dist(eng);
 
         int i_left = 0;
@@ -116,15 +114,13 @@ inline Population evolve(Population const &current, double beta, double gamma, i
 
         if (s_left > R0) {
           while (i_left != R0) {
-
             auto x = int_dist(eng);
             auto y = int_dist(eng);
 
             if (current.human(r + x, c + y).Is == Human::S) {
               if (current.human(r + x, c + y).v == true) {
-
                 auto vax_res = real_dist(eng);
-                
+
                 if (vax_res > v_eff) {
                   next.human(r + x, c + y).Is = Human::I;
                 }
@@ -140,15 +136,13 @@ inline Population evolve(Population const &current, double beta, double gamma, i
         if (s_left <= R0) {
           i_left = R0 - s_left;
           while (i_left != R0) {
-
             auto x = int_dist(eng);
             auto y = int_dist(eng);
 
             if (current.human(r + x, c + y).Is == Human::S) {
               if (current.human(r + x, c + y).v == true) {
-
                 auto vax_res = real_dist(eng);
-                
+
                 if (vax_res > v_eff) {
                   next.human(r + x, c + y).Is = Human::I;
                 }

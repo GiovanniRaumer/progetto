@@ -1,7 +1,7 @@
-#include "sir_l.hpp"
-
 #include <iomanip>
 #include <stdexcept>
+
+#include "sir_l.hpp"
 
 void print(std::vector<State> const& states) {
   std::cout << "+-----------+-----------+-----------+-----------+\n"
@@ -10,8 +10,9 @@ void print(std::vector<State> const& states) {
             << std::fixed;
   int T = states.size();
   for (int t = 0; t != T; ++t) {
-    std::cout << "| " << std::setw(9) << t + 1 << " | " << std::setw(9) << states[t].S << " | " << std::setw(9)
-              << states[t].I << " | " << std::setw(9) << states[t].R << " |\n";
+    std::cout << "| " << std::setw(9) << t + 1 << " | " << std::setw(9)
+              << states[t].S << " | " << std::setw(9) << states[t].I << " | "
+              << std::setw(9) << states[t].R << " |\n";
   }
   std::cout << "+-----------+-----------+-----------+-----------+\n";
 }
@@ -111,7 +112,7 @@ int main(int argc, char* argv[]) {
       scale = 1;
     }
     graph(states, s0.S + s0.I, scale);
-    
+
   } catch (std::runtime_error const& e) {
     std::cerr << e.what() << "INSTRUCTIONS:" << '\n'
               << "- mandatory - \n"

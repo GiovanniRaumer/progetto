@@ -1,6 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-
 #include "sir_l.hpp"
 
 TEST_CASE("Testing equations") {

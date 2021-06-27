@@ -1,7 +1,8 @@
 #include "sir_v.hpp"
 
 // COSTRUTTORE
-pandemic::Population::Population(int N, int I0) : w_side(N), w_grid(N, Row(N)), first_I{I0} {
+pandemic::Population::Population(int N, int I0)
+    : w_side(N), w_grid(N, Row(N)), first_I{I0} {
   assert(w_side > 0 && first_I > 0);
 
   for (int r = 0; r != N; ++r) {
@@ -24,7 +25,8 @@ pandemic::Population::Population(int N, int I0) : w_side(N), w_grid(N, Row(N)), 
 }
 
 // ACCESSO A CELLE
-pandemic::Human const& pandemic::Population::human(int r, int c) const noexcept {
+pandemic::Human const& pandemic::Population::human(int r,
+                                                   int c) const noexcept {
   auto const i = (r + w_side) % w_side;
   auto const j = (c + w_side) % w_side;
 

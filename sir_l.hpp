@@ -2,9 +2,9 @@
 #define SIR_L_HPP
 
 #include <cassert>
-#include <cmath> // for std::round
+#include <cmath>  // for std::round
 #include <iostream>
-#include <vector> 
+#include <vector>
 
 struct State {
   int S;
