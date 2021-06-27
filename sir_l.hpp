@@ -1,5 +1,5 @@
-#ifndef SIRQ_HPP
-#define SIRQ_HPP
+#ifndef SIR_L_HPP
+#define SIR_L_HPP
 
 #include <cassert>
 #include <cmath> // for std::round
